@@ -1,0 +1,13 @@
+{% extends 'baseproj.html' %}
+
+{% block content %}
+    {% for s in students %}
+        <div class="post">
+            <div class="date">
+                {{ s.icnum }}
+                {{ s.name }}
+                {{ s.course }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
