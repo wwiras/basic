@@ -1,0 +1,40 @@
+{% extends 'baseproj.html' %}
+
+{% block content %}
+<!-- <div class="container"> -->
+      <div class="page-header">
+        <h1>Student Information</h1>
+      </div>
+
+      <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">Boards</li>
+      </ol>
+
+      <table class="table">
+        <thead class="thead-inverse">
+          <tr>
+            <th>IC num</th>
+            <th>Name</th>
+            <th>Course</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+              <td>
+                {{ student.icnum }}
+              </td>
+              <td class="align-middle">{{ student.name }}</td>
+              <td class="align-middle">{{ student.course }}</td>
+            </tr>
+        </tbody>
+	  </table>
+
+    <p class="text-center">
+      <a href="{% url 'student_edit' student.pk %}" class="btn btn-primary" >Edit Student</a>
+      <a href="{% url 'student_remove' student.pk %}" class="btn btn-primary" >Remove Student</a>
+    </p>
+
+<!-- </div> -->
+{% endblock %}
+

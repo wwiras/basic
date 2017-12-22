@@ -1,13 +1,37 @@
 {% extends 'baseproj.html' %}
 
-{% block content %}
-    {% for s in students %}
-        <div class="post">
-            <div class="date">
-                {{ s.icnum }}
-                {{ s.name }}
-                {{ s.course }}
-            </div>
-        </div>
-    {% endfor %}
+
+{% block student %}
+
+	<table class="table">
+        <thead class="thead-inverse">
+          <tr>
+            <th>IC num</th>
+            <th>Name</th>
+            <th>Course</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% if students  %}
+          {% for student in students %}
+            <tr>
+              <td>
+                {{ student.icnum }}
+              </td>
+              <td class="align-middle">{{ student.name }}</td>
+              <td class="align-middle">{{ student.course }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+        	<tr>
+        	  <td colspan="3">No Records so far..!!</td>
+              <td>
+              </td>
+            </tr>
+        {% endif %}
+
+        </tbody>
+  </table>
+
 {% endblock %}

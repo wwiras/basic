@@ -22,6 +22,11 @@ body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
+.form-horizontal .form-group {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 body > .container {
   padding: 60px 15px 0;
 }

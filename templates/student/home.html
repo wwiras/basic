@@ -1,0 +1,66 @@
+{% extends 'baseproj.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- <div class="container"> -->
+	<!-- <div class="row"> -->
+
+<div class="page-header">
+  <h1>Student Registration System</h1>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title">Search</h1>
+    </div>
+    <div class="panel-body">
+      {% crispy form %}
+    </div>
+</div>
+
+   	
+   	<!-- </div> -->
+
+   	<table class="table">
+
+      <caption style="border: inherit; background-color: lightgrey;">
+            <span class="align-centre"><strong>List of Registered Students</strong></span>
+        </caption>
+
+        <thead class="thead-inverse">
+          <tr>
+            <th>IC num</th>
+            <th>Name</th>
+            <th>Course</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% if students  %}
+          {% for student in students %}
+            <tr>
+              <td>
+                <a href="{% url 'student_detail' student.pk %}">{{ student.icnum }}</a>
+              </td>
+              <td class="align-middle">{{ student.name }}</td>
+              <td class="align-middle">{{ student.course }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+        	<tr>
+        	  <td colspan="3">No Records so far..!!</td>
+              <td>
+              </td>
+            </tr>
+        {% endif %}
+
+        </tbody>
+    </table>
+
+       <p class="text-center">
+	    <a href="{% url 'student_new' %}" class="btn btn-primary" >Add New Student</a>
+	  </p>
+
+<!-- </div> -->
+{% endblock %}
+
