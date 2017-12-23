@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils import timezone
 from .models import Student
 from .forms import MessageForm, SearchForm, StudentForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # from .forms import PostForm
 
 
@@ -64,26 +65,50 @@ def student_remove(request,pk):
     return render(request, 'student/student_confirm_delete.html', {'student': student, 'pk':pk})
 
 def home(request):
+
     if request.method == "POST" :
         
         select_buttons = request.POST.get("select_buttons", "")
+        search = request.POST.get("search", "")
         if select_buttons == 'icnum':
-            # select_field = 'icnum__startswith'
-            students = Student.objects.filter(icnum__startswith=request.POST.get("search", "")).order_by('created_date')
+            students = Student.objects.filter(icnum__startswith=search).order_by('created_date')
+            # select_buttons = 'icnum'
         elif select_buttons == 'course':
-            # select_field = 'course__startswith'
-            students = Student.objects.filter(course__startswith=request.POST.get("search", "")).order_by('created_date')
+            students = Student.objects.filter(course__startswith=search).order_by('created_date')
+            # select_buttons = 'course'
         else:
-            students = Student.objects.filter(name__startswith=request.POST.get("search", "")).order_by('created_date')
-
+            students = Student.objects.filter(name__startswith=search).order_by('created_date')
+            # select_buttons = 'name'
+        
         if students:
             messages.success(request, str(len(students)) + " record(s) was/were found for keyword = " + str(request.POST.get("search", "")))
+            page = 1
         else:
             messages.error(request, "Sorry, No record was found for keyword = " + str(request.POST.get("search", "")))
-        # students = Student.objects.filter(name__startswith=request.POST.get("search", "")).order_by('created_date')
-        # students = Student.objects.filter(name__startswith=request.POST.get("search", "")).order_by('created_date')
-        # students = Student.objects.filter(name__startswith='L')
     else:
-        students = Student.objects.all().order_by('created_date')
 
-    return render(request, 'student/home.html', {'form': SearchForm(), 'students': students })
+        select_buttons = request.GET.get("select_buttons", "")
+        search = request.GET.get("search", "")
+
+        if search:
+            if select_buttons == 'icnum':
+                students = Student.objects.filter(icnum__startswith=search).order_by('created_date')
+            elif select_buttons == 'course':
+                students = Student.objects.filter(course__startswith=search).order_by('created_date')
+            else:
+                students = Student.objects.filter(name__startswith=search).order_by('created_date')
+        else:
+            students = Student.objects.all().order_by('created_date')
+
+        page = request.GET.get('page', 1)
+
+    paginator = Paginator(students, 10)
+    try:
+        students = paginator.page(page)
+    except PageNotAnInteger:
+        students = paginator.page(1)
+    except EmptyPage:
+        students = paginator.page(paginator.num_pages)
+
+    return render(request, 'student/home.html', {'form': SearchForm(), 'students': students, 
+        'search':search, 'select_buttons': select_buttons })

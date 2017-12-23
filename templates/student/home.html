@@ -57,6 +57,31 @@
         </tbody>
     </table>
 
+    {{ form_target }}
+    <div class="center-block">
+      {% if students.has_other_pages %}
+        <ul class="pagination">
+          {% if students.has_previous %}
+            <li><a href="?page={{ students.previous_page_number }}&search={{ search }}&select_buttons={{ select_buttons }}">&laquo;</a></li>
+          {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+          {% endif %}
+          {% for i in students.paginator.page_range %}
+            {% if students.number == i %}
+              <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+              <li><a href="?page={{ i }}&search={{ search }}&select_buttons={{ select_buttons }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if students.has_next %}
+            <li><a href="?page={{ students.next_page_number }}&search={{ search }}&select_buttons={{ select_buttons }}">&raquo;</a></li>
+          {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    </div>
+
        <p class="text-center">
 	    <a href="{% url 'student_new' %}" class="btn btn-primary" >Add New Student</a>
 	  </p>
