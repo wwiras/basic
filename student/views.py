@@ -5,10 +5,10 @@ from django.utils import timezone
 from .models import Student
 from .forms import MessageForm, SearchForm, StudentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 # from .forms import PostForm
 
-
-
+@login_required(login_url='/accounts/login/')
 def student_new(request):
 
     if request.method == "POST":
@@ -25,6 +25,7 @@ def student_new(request):
     
     return render(request, 'student/student_new.html', {'form': form})
 
+@login_required(login_url='/accounts/login/')
 def student_edit(request,pk):
 
     student = get_object_or_404(Student, pk=pk)
@@ -42,16 +43,18 @@ def student_edit(request,pk):
     
     return render(request, 'student/student_edit.html', {'form': form})
 
+@login_required(login_url='/accounts/login/')
 def student_detail(request,pk):
     student = get_object_or_404(Student, pk=pk)
     return render(request, 'student/student_detail.html', {'student': student})
+
 
 def student_list(request):
     students = Student.objects.all().order_by('created_date')
     # students = Student.objects.filter(name='G')
     return render(request, 'student/student_list.html', {'students': students})
 
-
+@login_required(login_url='/accounts/login/')
 def student_remove(request,pk):
 
     student = get_object_or_404(Student, pk=pk)
