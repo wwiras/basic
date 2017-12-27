@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
     'student',
     'crispy_forms',
 ]
@@ -53,6 +59,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'basicproj.urls'
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 
 TEMPLATES = [
     {
@@ -128,3 +143,73 @@ STATICFILES_DIRS = [
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+SITE_ID = 1
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+
+# ACCOUNT_ADAPTER (="allauth.account.adapter.DefaultAccountAdapter")
+ACCOUNT_AUTHENTICATION_METHOD = "username_email" #(="username" | "email" | "username_email")
+ACCOUNT_CONFIRM_EMAIL_ON_GET = False #(=False)
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL #(=settings.LOGIN_URL)
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL #(=None)
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 10 #(=3)
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = None #(="optional")
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "Subject is:" #(="[Site] "")
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+# ACCOUNT_FORMS (={})
+# ACCOUNT_LOGIN_ATTEMPTS_LIMIT =5)
+# ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT (=300)
+ACCOUNT_LOGOUT_ON_GET = False
+# ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE (=False)
+ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
+# ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_URL
+ACCOUNT_SIGNUP_FORM_CLASS = None
+ACCOUNT_SIGNUP_PASSWORD_VERIFICATION =True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD ="username"
+ACCOUNT_USER_MODEL_EMAIL_FIELD ="email"
+# ACCOUNT_USER_DISPLAY (=a callable returning user.username)
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+# ACCOUNT_USERNAME_BLACKLIST (=[])
+ACCOUNT_USERNAME_REQUIRED =True
+ACCOUNT_PASSWORD_INPUT_RENDER_VALUE =False
+ACCOUNT_PASSWORD_MIN_LENGTH =6
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# ACCOUNT_LOGIN_ON_PASSWORD_RESET (=False)
+# ACCOUNT_SESSION_REMEMBER (=None)
+# ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS( (=True)
+# ACCOUNT_TEMPLATE_EXTENSION (="html")
+# SOCIALACCOUNT_ADAPTER (="allauth.socialaccount.adapter.DefaultSocialAccountAdapter")
+# SOCIALACCOUNT_QUERY_EMAIL (=ACCOUNT_EMAIL_REQUIRED)
+# SOCIALACCOUNT_AUTO_SIGNUP (=True)
+# SOCIALACCOUNT_EMAIL_REQUIRED (=ACCOUNT_EMAIL_REQUIRED)
+# SOCIALACCOUNT_EMAIL_VERIFICATION (=ACCOUNT_EMAIL_VERIFICATION)
+# SOCIALACCOUNT_FORMS (={})
+# SOCIALACCOUNT_PROVIDERS (= dict)
+# SOCIALACCOUNT_STORE_TOKENS (=True)
+
+# SOCIALACCOUNT_PROVIDERS = \
+#     {'facebook':
+#        {'METHOD': 'oauth2',
+#         'SCOPE': ['email', 'public_profile', 'user_friends'],
+#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+#         'FIELDS': [
+#             'id',
+#             'email',
+#             'name',
+#             'first_name',
+#             'last_name',
+#             'verified',
+#             'locale',
+#             'timezone',
+#             'link',
+#             'gender',
+#             'updated_time'],
+#         'EXCHANGE_TOKEN': True,
+#         'VERIFIED_EMAIL': False,
+#         'VERSION': 'v2.4'}}

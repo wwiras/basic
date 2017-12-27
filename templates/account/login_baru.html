@@ -1,0 +1,52 @@
+{% extends "baseproj.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">    
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">{% trans "Sign In" %}</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a></div>
+                    </div>     
+
+                    <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                          <div class="form-group">
+                            <form class="login" method="POST" action="{% url 'account_login' %}">
+                              {% csrf_token %}
+                              {% crispy form %}
+                              {% if redirect_field_value %}
+                              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                              {% endif %}
+                              <input class="btn btn-success" type="submit" value="{% trans "Sign In" %}"></input>
+                              <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+                            </form>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-md-12 control">
+                              <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                                  Don't have an account! 
+                                  <a href="{{ signup_url }}">
+                                    Sign Up Here
+                                  </a>
+                              </div>
+                            </div>
+                          </div>  
+
+                    </div>                     
+                    
+          </div>  
+        </div>
+    </div>
+{% endblock %}

@@ -38,6 +38,35 @@ class StudentForm(forms.ModelForm):
         model = Student
         fields = ('icnum', 'name', 'course',)
 
+
+class SearchForm(forms.Form):
+    search = forms.CharField(label="Please Enter a Keyword")
+    select_buttons = forms.ChoiceField(
+        label='Select a Field to Lookup',
+        choices = (
+            ('name', "Name"), 
+            ('icnum', "ID/IC Number"),
+            ('course', "Course")
+        ),
+        widget = forms.Select,
+        initial = 'name',
+    )
+    # Uni-form
+    helper = FormHelper()
+    # helper.form_class = 'form-inline'
+    helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Field('search', css_class='input-xlarge'),
+        Field('select_buttons', css_class='input-xlarge'),
+        FormActions(
+            Submit('submit_change', 'Search', css_class="btn-primary"),
+            # Submit('cancel', 'Reset'),
+            HTML('<a class="btn btn-warning" href={% url "student_home" %}>Reset</a>'),
+        )
+    )
+
+
+
 class MessageForm(forms.Form):
     text_input = forms.CharField()
 
@@ -94,31 +123,3 @@ class MessageForm(forms.Form):
             Submit('cancel', 'Cancel'),
         )
     )
-
-
-class SearchForm(forms.Form):
-    search = forms.CharField(label="Please Enter a Keyword")
-    select_buttons = forms.ChoiceField(
-        label='Select a Field to Lookup',
-        choices = (
-            ('name', "Name"), 
-            ('icnum', "ID/IC Number"),
-            ('course', "Course")
-        ),
-        widget = forms.Select,
-        initial = 'name',
-    )
-    # Uni-form
-    helper = FormHelper()
-    # helper.form_class = 'form-inline'
-    helper.form_class = 'form-horizontal'
-    helper.layout = Layout(
-        Field('search', css_class='input-xlarge'),
-        Field('select_buttons', css_class='input-xlarge'),
-        FormActions(
-            Submit('submit_change', 'Search', css_class="btn-primary"),
-            # Submit('cancel', 'Reset'),
-            HTML('<a class="btn btn-warning" href={% url "student_home" %}>Reset</a>'),
-        )
-    )
-
