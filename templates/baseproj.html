@@ -21,6 +21,11 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <link href="https://getbootstrap.com/docs/3.3/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regul.woff">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot"> -->
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{% static 'css/sticky-footer-navbar.css' %}">
@@ -53,23 +58,37 @@
           </button>
           <a class="navbar-brand" href="#">SRS</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="{% url 'student_home' %}">Student</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+            {% block home_navbar %}<li class="active"><a href="/">Home</a></li>{% endblock %}
+            
+            {% block student_navbar %}<li><a href="{% url 'student_home' %}">Student</a></li>{% endblock %}
+            
+            {% block user_navbar %}
+
+              {% if user.is_authenticated %}
+                <!-- <li>Hi</li> -->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><!-- span class="glyphicon glyphicon-user"></span --></span> Hi {{ user.username }} !<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <!-- li><a href="#">Profile</a></li -->
+                    <li><a href="/accounts/password/change/">Change Password</a></li>
+                    <!-- li><a href="#">My Dashboard</a></li -->
+                    <li><a href="/accounts/logout/"><!-- span class="glyphicon glyphicon-off"></span --> Logout</a></li>
+                    <!-- li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li> -->
+                  </ul>
+                </li>
+              {% else %}
+                <li><a href="/accounts/login/">Sign In</a></li>
+                <!-- <li class="active"><a href="/accounts/login/">Sign In</a></li> -->
+                <li><a href="/accounts/signup/">Sign Up</a></li>
+                <!-- <li><a href="#contact">About</a></li> -->
+              {% endif %}
+
+            {% endblock %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
