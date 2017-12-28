@@ -1,21 +1,36 @@
-{% extends "account/base.html" %}
+{% extends "baseproj.html" %}
 
 {% load i18n %}
-
-{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+{% load crispy_forms_tags %}
+{% load account socialaccount %}
 
 {% block content %}
-<h1>{% trans "Sign Out" %}</h1>
+<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
+		<div class="panel panel-info" >
+        	
+        	<div class="panel-heading">
+                <div class="panel-title">{% block head_title %}{% trans "Sign Out" %}{% endblock %}</div>
+            </div>
 
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
-</form>
+            <div style="padding-top:30px" class="panel-body" >
+            	<p>{% trans 'Are you sure you want to sign out?' %}</p>
+	    		<form method="post" action="{% url 'account_logout' %}">
+				  {% csrf_token %}
+				  {% if redirect_field_value %}
+				  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+				  {% endif %}
+				  <button class="btn btn-success primaryAction" type="submit">{% trans 'Sign Out' %}</button>
+				  <a class="btn btn-primary secondaryAction" href="{% url 'student_home' %}">{% trans "Cancel" %}</a>
+				</form>
+    		</div>
+
+        </div>
 
 
+</div>
 {% endblock %}
+
+
+
+

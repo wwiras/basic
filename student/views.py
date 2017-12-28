@@ -73,6 +73,8 @@ def home(request):
         
         select_buttons = request.POST.get("select_buttons", "")
         search = request.POST.get("search", "")
+        page = 1
+        
         if select_buttons == 'icnum':
             students = Student.objects.filter(icnum__startswith=search).order_by('created_date')
             # select_buttons = 'icnum'
