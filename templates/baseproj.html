@@ -26,9 +26,10 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regul.woff">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot"> -->
-
+    {% block head_datatables_css %}{% endblock %}
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{% static 'css/sticky-footer-navbar.css' %}">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <!-- <script src="https://getbootstrap.com/docs/3.3/assets/js/ie-emulation-modes-warning.js"></script> -->
@@ -163,8 +164,10 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- <script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script> -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block head_datatables_js %}{% endblock %}
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <script src="https://getbootstrap.com/docs/3.3/assets/js/ie10-viewport-bug-workaround.js"></script> -->
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+    {% block head_datatables_script %}{% endblock %}
   </body>
 </html>
